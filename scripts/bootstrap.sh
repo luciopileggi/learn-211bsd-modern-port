@@ -12,6 +12,8 @@ sed \
 	-e 's@^+++ port/@+++ b/@' \
 	"$ROOT/patches/learn-211bsd-modern.patch" | patch -d "$ROOT/work/port" -p1
 
+chmod 755 "$ROOT/work/port/run.sh"
+
 make -C "$ROOT/work/port" clean all
 
 "$ROOT/scripts/fetch-lessons.sh"
