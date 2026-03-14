@@ -1,0 +1,8 @@
+/work/
+/runtime/
+/log/
+/.learnrc
+*.o
+learn
+lrntee
+lcount

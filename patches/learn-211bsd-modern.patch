@@ -1,0 +1,981 @@
+diff -ruN orig/Makefile port/Makefile
+--- orig/Makefile	2026-03-14 23:54:34
++++ port/Makefile	2026-03-14 23:54:40
+@@ -1,84 +1,21 @@
+-#
+-# Copyright (c) 1987 Regents of the University of California.
+-# All rights reserved.  The Berkeley software License Agreement
+-# specifies the terms and conditions for redistribution.
+-#
+-#	@(#)Makefile	4.6.2	(2.11BSD)	1996/10/23
+-#
+-# Flag BSD4_2 means 4.2 or later.
+-CFLAGS=	-O -DBSD4_2 -DLOGDIR=\"/var/log/learn\"
+-SEPFLAG=-i
+-LLIB=	${DESTDIR}/usr/share/learn/bin
+-SRCS=	copy.c dounit.c getlesson.c learn.c list.c mem.c makpipe.c maktee.c \
+-	mysys.c selsub.c selunit.c start.c whatnow.c wrapup.c
+-OBJS=	copy.o dounit.o getlesson.o learn.o list.o mem.o makpipe.o maktee.o \
+-	mysys.o selsub.o selunit.o start.o whatnow.o wrapup.o
++CC ?= cc
++CFLAGS ?= -O2
++CFLAGS += -std=gnu89 -Wno-deprecated-non-prototype -Wno-incompatible-function-pointer-types -DBSD4_2 -DLOGDIR=\"./log\"
+ 
++SRCS = compat.c copy.c dounit.c getlesson.c learn.c list.c mem.c makpipe.c \
++	maktee.c mysys.c selsub.c selunit.c start.c whatnow.c wrapup.c
++OBJS = $(SRCS:.c=.o)
++
+ all: learn lrntee lcount
+ 
+-learn: ${OBJS}
+-	${CC} ${SEPFLAG} -o $@ ${CFLAGS} ${OBJS}
++learn: $(OBJS)
++	$(CC) $(CFLAGS) -o $@ $(OBJS)
+ 
+-lcount: lcount.o
+-	${CC} ${CFLAGS} ${SEPFLAG} -o $@ lcount.o
+-
+ lrntee: lrntee.o
+-	${CC} ${CFLAGS} ${SEPFLAG} -o $@ lrntee.o
++	$(CC) $(CFLAGS) -o $@ lrntee.o
+ 
+-clean: FRC
+-	rm -f *.o core learn lrntee lcount
++lcount: lcount.o
++	$(CC) $(CFLAGS) -o $@ lcount.o
+ 
+-depend: FRC
+-	chmod u+w Makefile
+-	mkdep ${CFLAGS} ${SRCS} lcount.c lrntee.c
+-
+-install: all
+-	-mkdir ${DESTDIR}/${LLIB}
+-	chmod 755 ${DESTDIR}/${LLIB}
+-	install -c -s -m 755 learn ${DESTDIR}/usr/bin/learn
+-	install -s -m 755 learn ${LLIB}/learn
+-	install -s -m 755 lrntee ${LLIB}/lrntee
+-	install -s -m 755 lcount ${LLIB}/lcount
+-
+-lint: FRC
+-	lint ${CFLAGS} ${SRCS}
+-	lint ${CFLAGS} lcount.c
+-	lint ${CFLAGS} lrntee.c
+-
+-tags: FRC
+-	ctags ${SRCS}
+-	ctags -a lcount.c
+-	ctags -a lrntee.c
+-	sort -o tags tags
+-
+-FRC:
+-
+-# DO NOT DELETE THIS LINE -- mkdep uses it.
+-# DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
+-
+-copy.o: copy.c /usr/include/stdio.h /usr/include/signal.h
+-copy.o: /usr/include/machine/trap.h lrnref.h
+-dounit.o: dounit.c /usr/include/stdio.h lrnref.h
+-getlesson.o: getlesson.c /usr/include/stdio.h lrnref.h
+-learn.o: learn.c /usr/include/stdio.h lrnref.h /usr/include/signal.h
+-learn.o: /usr/include/machine/trap.h
+-list.o: list.c /usr/include/stdio.h lrnref.h /usr/include/signal.h
+-list.o: /usr/include/machine/trap.h
+-mem.o: mem.c /usr/include/stdio.h lrnref.h
+-makpipe.o: makpipe.c /usr/include/stdio.h
+-maktee.o: maktee.c /usr/include/stdio.h /usr/include/signal.h
+-maktee.o: /usr/include/machine/trap.h lrnref.h
+-mysys.o: mysys.c /usr/include/stdio.h /usr/include/signal.h
+-mysys.o: /usr/include/machine/trap.h
+-selsub.o: selsub.c /usr/include/stdio.h /usr/include/sys/types.h
+-selsub.o: /usr/include/sys/stat.h lrnref.h /usr/include/sys/dir.h
+-selunit.o: selunit.c /usr/include/stdio.h lrnref.h
+-start.o: start.c /usr/include/stdio.h lrnref.h /usr/include/sys/types.h
+-start.o: /usr/include/sys/dir.h
+-whatnow.o: whatnow.c /usr/include/stdio.h lrnref.h
+-wrapup.o: wrapup.c /usr/include/signal.h /usr/include/machine/trap.h
+-wrapup.o: /usr/include/stdio.h lrnref.h
+-lcount.o: lcount.c /usr/include/stdio.h
+-lrntee.o: lrntee.c
+-
+-# IF YOU PUT ANYTHING HERE IT WILL GO AWAY
++clean:
++	rm -f *.o learn lrntee lcount
+diff -ruN orig/README port/README
+--- orig/README	2026-03-14 23:54:34
++++ port/README	1970-01-01 01:00:00
+@@ -1,66 +0,0 @@
+-Important changes since 4.2:
+-	Now uses 4.2 filesystem correctly and removes files between lessons.
+-	Tee'd output to the .ocopy file works.  No more infinite loop on EOF.
+-	Now maintains a .learnrc file to start you where you left off last
+-	session.  The undocumented and dubious "xyzzy" command has become
+-	the documented and dubious "hint" command.  Miscellaneous typos.
+-
+-Note that play directories are created in /tmp, no longer
+-in /usr/share/learn/play.  The C script is not complete;
+-use at your own risk.  The editor script still smacks of ed.
+-
+-Lessons are in (vi lessons are on user-contributed-software tape)
+-	/usr/share/learn/*
+-and auxilliary programs are in
+-	/usr/share/learn/bin
+-
+-Make a learn by
+-	make
+-Check that it's sensible with
+-	make check
+-If that doesn't print any messages,
+-you're probably in good shape.
+-
+-Lesson directories may be protected.
+-
+-Learn keeps a log file for each script in the .../learn/log
+-directory (files, editor, etc.) containing an entry for each
+-lesson attempted.  These files will grow without bound,
+-unless they are periodically truncated. 
+-The log files should have general write permission.
+-If you don't want logging (a sensible position to take),
+-set the variable "logging" to zero in source/learn.c
+-before making learn, or remove the log directory, or just
+-turn off write permission for a particular log file.
+-
+-Learn requires about 1500 blocks to make itself,
+-and about 1000 when completely made.
+-
+-The best way to get ex to prompt within learn was to modify
+-the user's environment variables PATH and EXINIT.
+-
+-Due to inane assumptions in the VAX versions of csh -i and ex
+-when stdin and stdout are not terminals, kludges have been
+-added with #if's.  In particular, I use the old terminal driver
+-to keep #copyout working and make sh -i masquerade as
+-a csh -i (by setting PS1=% ) to keep #pipe working.
+-
+-"#create" can now end in an incomplete last line by making '#'
+-the last character on the line.  On input the string %s is
+-converted to the lesson directory (useful for debugging).
+-On output with "#copyout", prompt signs ("% ") are removed.
+-"#cmp" now takes a trailing NUMBER specifying that only NUMBER
+-many lines are to be compared.
+-
+-The new command "hint" prints the "answer" (i.e. the last part
+-of the lesson).  With an argument it prints the whole lesson text.
+-A new routine called getlesson tries to construct a valid
+-lesson number from in invalid one before giving up.
+-The commands "where", "skip", and "again" are also new.
+-Greeting, closing, and reminder messages have been expanded.
+-
+-The "vi" lessons are packaged separately as part of the user-
+-contributed software.  Ask the system administrator to install them.
+-
+-Please report problems, bad lessons, contributions, etc.,
+-to John Kunze, jak@ernie.Berkeley.EDU.  Thanks.
+diff -ruN orig/compat.c port/compat.c
+--- orig/compat.c	1970-01-01 01:00:00
++++ port/compat.c	2026-03-14 23:54:40
+@@ -0,0 +1,10 @@
++#include "lrnref.h"
++
++char *
++learn_gets(char *buf, size_t size)
++{
++	if (fgets(buf, (int)size, stdin) == NULL)
++		return NULL;
++	trim(buf);
++	return buf;
++}
+diff -ruN orig/copy.c port/copy.c
+--- orig/copy.c	2026-03-14 23:54:35
++++ port/copy.c	2026-03-14 23:54:40
+@@ -8,12 +8,12 @@
+ 
+ char togo[50];
+ char last[100];
+-char logf[100];
++char log_file[100];
+ char subdir[100];
+-extern char *ctime();
+ extern int review;
+ int noclobber;
+ 
++void
+ copy(prompt, fin)
+ int prompt;
+ FILE *fin;
+@@ -21,9 +21,8 @@
+ 	FILE *fout, *f;
+ 	char s[100], t[100], s1[100], nm[30];
+ 	char *r, *tod, c;
+-	int *p, tv[2];
+-	extern int intrpt(), *action();
+-	extern char *wordb();
++	int *p;
++	time_t tv;
+ 	int nmatch = 0;
+ 	long mark;
+ 
+@@ -209,13 +208,13 @@
+ 		case LOG:	/* logfiles should be created mode 666 */
+ 			if (!logging)
+ 				break;
+-			if (logf[0] == 0)
+-				sprintf(logf, "%s/%s", LOGDIR, sname);
+-			f = fopen((r ? r : logf), "a");
++			if (log_file[0] == 0)
++				sprintf(log_file, "%s/%s", LOGDIR, sname);
++			f = fopen((r ? r : log_file), "a");
+ 			if (f == NULL)
+ 				break;
+-			time(tv);
+-			tod = ctime(tv);
++			time(&tv);
++			tod = ctime(&tv);
+ 			tod[24] = 0;
+ 			fprintf(f, "%s L%-6s %s %2d %s\n", tod,
+ 				todo, status? "fail" : "pass", speed, pwline);
+@@ -242,6 +241,7 @@
+ 		return(0);
+ }
+ 
++void
+ trim(s)
+ char *s;
+ {
+@@ -251,6 +251,7 @@
+ 		*s=0;
+ }
+ 
++void
+ scopy(fi, fo)	/* copy fi to fo until a line with #
+ 		 * sequence "#\n" means a line not ending with \n
+ 		 * control-M's are filtered out */
+@@ -346,6 +347,7 @@
+ 	return(c ? s : NULL);
+ }
+ 
++void
+ unhook()
+ {
+ 	if (incopy) {
+diff -ruN orig/dounit.c port/dounit.c
+--- orig/dounit.c	2026-03-14 23:54:35
++++ port/dounit.c	2026-03-14 23:54:40
+@@ -8,6 +8,7 @@
+ int	remind = 2;		/* to remind user of "again" and "bye" */
+ extern	int	noclobber;
+ 
++void
+ dounit()
+ {
+ 	char tbuff[100];
+@@ -48,7 +49,8 @@
+ 			wrong > 1 ? "still " : "");
+ 		fflush(stdout);
+ 		for(;;) {
+-			gets(tbuff);
++			if (learn_gets(tbuff, sizeof(tbuff)) == NULL)
++				tbuff[0] = '\0';
+ 			if (tbuff[0] == 'y') {
+ 				printf("Try the problem again.\n");
+ 				if (remind--) {
+@@ -72,4 +74,3 @@
+ 	}
+ 	setdid(todo, sequence++);
+ }
+-
+diff -ruN orig/getlesson.c port/getlesson.c
+--- orig/getlesson.c	2026-03-14 23:54:36
++++ port/getlesson.c	2026-03-14 23:54:40
+@@ -40,9 +40,11 @@
+ 	if (fork() == 0) {
+ 		close(fd[0]);
+ 		dup2(fd[1], 1);
+-		sprintf(ans,"cd %s/%s ; fgrep '%s' L?.* L??.* L???.*", direct, sname, level);
+-		execl("/bin/csh", "csh", "-cf", ans, 0);
+-		perror("/bin/csh");
++		sprintf(ans,
++		    "cd '%s/%s' && grep -l -- '%s' L?.* L??.* L???.* 2>/dev/null",
++		    direct, sname, level);
++		execl("/bin/sh", "sh", "-c", ans, (char *)0);
++		perror("/bin/sh");
+ 		fprintf(stderr, "Getlesson:  can't do %s\n", ans);
+ 	}
+ 	close(fd[1]);
+diff -ruN orig/learn.c port/learn.c
+--- orig/learn.c	2026-03-14 23:54:36
++++ port/learn.c	2026-03-14 23:54:40
+@@ -29,12 +29,11 @@
+ int	teed;
+ int	total;
+ 
++int
+ main(argc,argv)
+ int argc;
+ char *argv[];
+ {
+-	extern hangup(), intrpt();
+-
+ 	speed = 0;
+ 	more = 1;
+ 	pwline = getlogin();
+@@ -52,17 +51,22 @@
+ 		whatnow();
+ 	}
+ 	wrapup(0);
++	return 0;
+ }
+ 
+-hangup()
++void
++hangup(int sig)
+ {
++	(void)sig;
+ 	wrapup(1);
+ }
+ 
+-intrpt()
++void
++intrpt(int sig)
+ {
+ 	char response[20], *p;
+ 
++	(void)sig;
+ 	signal(SIGINT, hangup);
+ 	write(2, "\nInterrupt.\nWant to go on?  ", 28);
+ 	p = response;
+diff -ruN orig/list.c port/list.c
+--- orig/list.c	2026-03-14 23:54:36
++++ port/list.c	2026-03-14 23:54:40
+@@ -7,11 +7,12 @@
+ #include "signal.h"
+ 
+ int istop;
++void stop(int sig);
+ 
++void
+ list(r)
+ char *r;
+ {
+-	int stop(), intrpt();
+ 	FILE *ft;
+ 	char s[100];
+ 
+@@ -28,7 +29,9 @@
+ 	signal(SIGINT, intrpt);
+ }
+ 
+-stop()
++void
++stop(int sig)
+ {
++	(void)sig;
+ 	istop=0;
+ }
+diff -ruN orig/lrnref.h port/lrnref.h
+--- orig/lrnref.h	2026-03-14 23:54:36
++++ port/lrnref.h	2026-03-14 23:54:40
+@@ -1,5 +1,21 @@
+ /*	lrnref.h	4.4	86/05/15	*/
+ 
++#ifndef LRNREF_H
++#define LRNREF_H
++
++#include <dirent.h>
++#include <errno.h>
++#include <fcntl.h>
++#include <signal.h>
++#include <stdio.h>
++#include <stdlib.h>
++#include <string.h>
++#include <sys/stat.h>
++#include <sys/types.h>
++#include <sys/wait.h>
++#include <time.h>
++#include <unistd.h>
++
+ #define	READY	0
+ #define	PRINT	1
+ #define	COPYIN	2
+@@ -51,3 +67,38 @@
+ extern	int	skip;
+ extern	int	teed;
+ extern	int	total;
++
++char *learn_gets(char *buf, size_t size);
++int already(char *lesson);
++int *action(char *s);
++void chgenv(void);
++int cmp(char *r);
++void copy(int prompt, FILE *fin);
++int cntlessons(char *sname);
++void dounit(void);
++void fcopy(char *new, char *old);
++char *getlesson(void);
++int grand(void);
++void hangup(int sig);
++void intrpt(int sig);
++void list(char *r);
++int lrn_system(char *s);
++int makpipe(void);
++int maktee(void);
++int mysys(char *s);
++int pgets(char *s, int prompt, FILE *f);
++void scopy(FILE *fi, FILE *fo);
++void selunit(void);
++void selsub(int argc, char *argv[]);
++void setdid(char *lesson, int sequence);
++void start(char *lesson);
++void tellwhich(void);
++void trim(char *s);
++void unhook(void);
++void unsetdid(char *lesson);
++void untee(void);
++char *wordb(char *s, char *t);
++void whatnow(void);
++void wrapup(int n);
++
++#endif
+diff -ruN orig/lrntee.c port/lrntee.c
+--- orig/lrntee.c	2026-03-14 23:54:37
++++ port/lrntee.c	2026-03-14 23:54:40
+@@ -2,6 +2,12 @@
+ static char sccsid[] = "@(#)lrntee.c	4.3	(Berkeley)	5/15/86";
+ #endif not lint
+ 
++#include "lrnref.h"
++
++void fl(int f);
++void put(char c, int f);
++
++int
+ main()
+ {
+ 	int f;
+@@ -14,11 +20,15 @@
+ 	}
+ 	fl(f);
+ 	close(f);
++	return 0;
+ }
+ 
+ static char ln[512];
+ char *p = ln;
++void
+ put(c, f)
++char c;
++int f;
+ {
+ 	*p++ = c;
+ 	if (c == '\n') {
+@@ -26,7 +36,9 @@
+ 		p=ln;
+ 	}
+ }
++void
+ fl(f)
++int f;
+ {
+ 	register char *s;
+ 
+diff -ruN orig/makpipe.c port/makpipe.c
+--- orig/makpipe.c	2026-03-14 23:54:37
++++ port/makpipe.c	2026-03-14 23:54:40
+@@ -3,6 +3,7 @@
+ #endif not lint
+ 
+ #include "stdio.h"
++#include "lrnref.h"
+ 
+ makpipe()
+ {
+@@ -14,13 +15,7 @@
+ 		close(0);
+ 		dup(f[0]);
+ 		close(f[0]);
+-#if BSD4_2
+-		execl ("/bin/sh", "sh", "-i", 0);
+-		execl ("/usr/ucb/bin/sh", "sh", "-i", 0);
+-#else
+-		execlp("/bin/csh", "csh", "-if", 0);
+-		/*execl ("/usr/ucb/bin/csh", "csh", "-if", 0);*/
+-#endif
++		execl("/bin/sh", "sh", "-i", (char *)0);
+ 		write(2, "Exec error\n", 11);
+ 	}
+ 	close(f[0]);
+diff -ruN orig/maktee.c port/maktee.c
+--- orig/maktee.c	2026-03-14 23:54:38
++++ port/maktee.c	2026-03-14 23:54:40
+@@ -9,6 +9,7 @@
+ static int oldout;
+ static char tee[50];
+ 
++int
+ maktee()
+ {
+ 	int fpip[2], in, out;
+@@ -41,6 +42,7 @@
+ 	return(1);
+ }
+ 
++void
+ untee()
+ {
+ 	int x;
+diff -ruN orig/mem.c port/mem.c
+--- orig/mem.c	2026-03-14 23:54:38
++++ port/mem.c	2026-03-14 23:54:40
+@@ -65,6 +65,7 @@
+ char *whcp = whbuff;
+ static struct whichdid *pw;
+ 
++void
+ setdid(lesson, sequence)
+ char *lesson;
+ int sequence;
+@@ -89,6 +90,7 @@
+ 	}
+ }
+ 
++void
+ unsetdid(lesson)
+ char *lesson;
+ {
+@@ -107,9 +109,10 @@
+ 	return(0);
+ }
+ 
++void
+ tellwhich()
+ {
+ 	for (pw=which; pw < which+nwh; pw++)
+-		printf("%3d lesson %7s sequence %3d\n",
++		printf("%3ld lesson %7s sequence %3d\n",
+ 			pw-which, pw->w_less, pw->w_seq);
+ }
+diff -ruN orig/mysys.c port/mysys.c
+--- orig/mysys.c	2026-03-14 23:54:39
++++ port/mysys.c	2026-03-14 23:54:40
+@@ -4,6 +4,7 @@
+ 
+ #include "stdio.h"
+ #include "signal.h"
++#include "lrnref.h"
+ 
+ #define	EASY	1
+ #define	MEDIUM	2
+@@ -11,6 +12,7 @@
+ #define	EMAX	256
+ 
+ char *envp[EMAX+1];
++int getargs(char *s, char **v);
+ 
+ /*
+  * This routine edits the PATH environment variable so that
+@@ -19,19 +21,18 @@
+  * will not print \r's, and will be usable with open mode.
+  */
+ 
++void
+ chgenv()
+ {
+ 	register char **p;
+ 	register int i;
+ 	extern char **environ;
+-	extern char *direct;
+ 	char path[BUFSIZ], exinit[BUFSIZ];
+-	char *malloc();
+ 
+ 	sprintf(path, "PATH=%s/bin:/usr/cc/bin:/usr/ucb/bin:", direct);
+ 	sprintf(exinit, "EXINIT=set prompt noopt open window=23");
+ #if BSD4_2
+-	system("stty old");
++	lrn_system("stty old");
+ 	for (p=environ,i=3; *p != 0 && i < EMAX; p++,i++)   {
+ #else
+ 	for (p=environ,i=2; *p != 0 && i < EMAX; p++,i++)   {
+@@ -60,6 +61,7 @@
+ 	environ = envp;
+ }
+ 
++int
+ mysys(s)
+ char *s;
+ {
+@@ -96,11 +98,11 @@
+ 	}
+ 	switch (type) {
+ 	case HARD:
+-		return(system(s));
++		return(lrn_system(s));
+ 	case MEDIUM:
+ 		strcpy(p, "exec ");
+ 		strcat(p, s);
+-		return(system(p));
++		return(lrn_system(p));
+ 	case EASY:
+ 		strcpy(p,s);
+ 		nv = getargs(p, np);
+@@ -124,14 +126,15 @@
+ 				sprintf(b, "/usr/bin/%s", t);
+ 				execv(b, np);
+ 				perror(b); */
+-				fprintf(stderr, "Mysys:  execv failed on %s\n", np);
++				fprintf(stderr, "Mysys:  execv failed on %s\n", t);
+ 				exit(1);
+ 			}
+ 			wait(&stat);
+ 			return(stat);
+ 		}
+-		return(system(s));
++		return(lrn_system(s));
+ 	}
++	return -1;
+ }
+ 
+ /*
+@@ -141,7 +144,8 @@
+  *	user gets the behavior he expects.
+  */
+ 
+-system(s)
++int
++lrn_system(s)
+ char *s;
+ {
+ 	int status, pid, w;
+@@ -152,7 +156,7 @@
+ 	if ((pid = fork()) == 0) {
+ 		signal(SIGINT, SIG_DFL);
+ 		signal(SIGQUIT, SIG_DFL);
+-		execl("/bin/csh", "csh", "-cf", s, 0);
++		execl("/bin/sh", "sh", "-c", s, (char *)0);
+ 		_exit(127);
+ 	}
+ 	while ((w = wait(&status)) != pid && w != -1)
+@@ -164,6 +168,7 @@
+ 	return(status);
+ }
+ 
++int
+ getargs(s, v)
+ char *s, **v;
+ {
+diff -ruN orig/run.sh port/run.sh
+--- orig/run.sh	1970-01-01 01:00:00
++++ port/run.sh	2026-03-14 23:54:40
+@@ -0,0 +1,8 @@
++#!/bin/sh
++set -eu
++
++cd "$(dirname "$0")"
++ROOT="$(pwd)"
++mkdir -p log runtime/share/learn/bin runtime/log
++
++exec ./learn "-$ROOT/runtime/share/learn" "$@"
+diff -ruN orig/selsub.c port/selsub.c
+--- orig/selsub.c	2026-03-14 23:54:39
++++ port/selsub.c	2026-03-14 23:54:40
+@@ -8,7 +8,9 @@
+ #include "lrnref.h"
+ 
+ char learnrc[100];
++void chknam(char *name);
+ 
++void
+ selsub(argc,argv)
+ char *argv[];
+ {
+@@ -17,7 +19,6 @@
+ 	static char dirname[40];
+ 	static char subname[40];
+ 	FILE *fp;
+-	char *getenv();
+ 	char *home;
+ 
+ 	if (argc > 1 && argv[1][0] == '-') {
+@@ -73,13 +74,17 @@
+ 		printf("press RETURN; otherwise type the name of\n");
+ 		printf("the course you want, followed by RETURN.\n");
+ 		fflush(stdout);
+-		gets(sname=subname);
++		sname = subname;
++		if (learn_gets(sname, sizeof(subname)) == NULL)
++			sname[0] = '\0';
+ 		if (sname[0] == '\0') {
+ 			list("Xinfo");
+ 			do {
+ 				printf("\nWhich subject?  ");
+ 				fflush(stdout);
+-				gets(sname=subname);
++				sname = subname;
++				if (learn_gets(sname, sizeof(subname)) == NULL)
++					sname[0] = '\0';
+ 			} while (sname[0] == '\0');
+ 		}
+ 	}
+@@ -94,7 +99,8 @@
+ 		printf("and I will look for the first lesson containing it.\n");
+ 		printf("To start at the beginning, just hit RETURN.\n");
+ 		fflush(stdout);
+-		gets(ans2);
++		if (learn_gets(ans2, sizeof(ans2)) == NULL)
++			ans2[0] = '\0';
+ 		if (ans2[0]==0)
+ 			strcpy(ans2,"0");
+ 		else
+@@ -111,7 +117,7 @@
+ 	}
+ 	sprintf(dir=dirname, "pl%da", getpid());
+ 	sprintf(ans1, "mkdir %s", dir);
+-	system(ans1);
++	lrn_system(ans1);
+ 	if (chdir(dir) < 0) {
+ 		perror(dir);
+ 		fprintf(stderr, "Selsub:  couldn't make play directory with %s.\nBye.\n", ans1);
+@@ -119,13 +125,17 @@
+ 	}
+ 	/* after this point, we have a working directory. */
+ 	/* have to call wrapup to clean up */
+-	if (access(sprintf(ans1, "%s/%s/Init", direct, sname), 04)==0)
+-		if (system(sprintf(ans1, "%s/%s/Init %s", direct, sname, level)) != 0) {
++	sprintf(ans1, "%s/%s/Init", direct, sname);
++	if (access(ans1, 04)==0) {
++		sprintf(ans1, "%s/%s/Init %s", direct, sname, level);
++		if (lrn_system(ans1) != 0) {
+ 			printf("Leaving learn.\n");
+ 			wrapup(1);
+ 		}
++	}
+ }
+ 
++void
+ chknam(name)
+ char *name;
+ {
+@@ -135,16 +145,10 @@
+ 	}
+ }
+ 
+-#ifndef DIR
+-#include <sys/dir.h>
+-#endif
+-
+ cntlessons(sname)	/* return number of entries in lesson directory; */
+ char *sname;		/* approximate at best since I don't count L0, Init */
+ {			/* and lessons skipped by good students */
+-#if BSD4_2
+-	struct direct dbuf;
+-	register struct direct *ep = &dbuf;	/* directory entry pointer */
++	struct dirent *ep;
+ 	int n = 0;
+ 	DIR *dp;
+ 
+@@ -158,10 +162,4 @@
+ 	}
+ 	closedir(dp);
+ 	return n - 2;				/* minus . and .. */
+-#else
+-	struct stat statbuf;
+-
+-	stat(sname, &statbuf);
+-	return statbuf.st_size / 16 - 2;
+-#endif
+ }
+diff -ruN orig/selunit.c port/selunit.c
+--- orig/selunit.c	2026-03-14 23:54:39
++++ port/selunit.c	2026-03-14 23:54:40
+@@ -8,6 +8,7 @@
+ int	nsave	= 0;
+ int	review	= 0;
+ 
++void
+ selunit()
+ {
+ 	static char dobuff[50];
+@@ -15,7 +16,6 @@
+ 	char fnam[80], s[80], zb[200];
+ 	char posslev[20][20];
+ 	int diff[20], i, k, m, n, best, alts;
+-	char *getlesson();
+ 	FILE *f;
+ 
+ 	if (again) {
+@@ -30,7 +30,8 @@
+ 	while (ask) {
+ 		printf("What lesson? ");
+ 		fflush(stdout);
+-		gets(dobuff);
++		if (learn_gets(dobuff, sizeof(dobuff)) == NULL)
++			dobuff[0] = '\0';
+ 		if (strcmp(dobuff, "bye") == 0)
+ 			wrapup(1);
+ 		level = dobuff;
+@@ -100,17 +101,19 @@
+ 	fclose(f);
+ }
+ 
++int
+ abs(x)
+ {
+ 	return(x>=0 ? x : -x);
+ }
+ 
++int
+ grand()
+ {
+ 	static int garbage;
+ 	int a[2], b;
+ 
+-	time(a);
+-	b = a[1]+10*garbage++;
++	(void)a;
++	b = (int)time(NULL) + 10 * garbage++;
+ 	return(b&077777);
+ }
+diff -ruN orig/start.c port/start.c
+--- orig/start.c	2026-03-14 23:54:40
++++ port/start.c	2026-03-14 23:54:40
+@@ -4,48 +4,33 @@
+ 
+ #include "stdio.h"
+ #include "lrnref.h"
+-#include <sys/types.h>
+-#ifndef DIR
+-#include <sys/dir.h>
+-#endif
+ 
++void
+ start(lesson)
+ char *lesson;
+ {
+-	struct direct dbuf;
+-	register struct direct *ep = &dbuf;	/* directory entry pointer */
+-	int c, n;
++	struct dirent *ep;
++	int c;
+ 	char where [100];
+-
+-#ifdef BSD4_2
+ 	DIR *dp;
+-#define OPENDIR(s)	((dp = opendir(s)) != NULL)
+-#define DIRLOOP(s)	for (s = readdir(dp); s != NULL; s = readdir(dp))
+-#define EPSTRLEN	ep->d_namlen
+-#define CLOSEDIR	closedir(dp)
+-#else
+-	int f;
+-#define OPENDIR(s)	((f = open(s, 0)) >= 0)
+-#define DIRLOOP(s)	while (read(f, s, sizeof *s) == sizeof *s)
+-#define EPSTRLEN	strlen(ep->d_name)
+-#define CLOSEDIR	close(f)
+-#endif
+ 
+-	if (!OPENDIR(".")) {		/* clean up play directory */
++	if ((dp = opendir(".")) == NULL) {		/* clean up play directory */
+ 		perror("Start:  play directory");
+ 		wrapup(1);
+ 	}
+-	DIRLOOP(ep) {
++	while ((ep = readdir(dp)) != NULL) {
+ 		if (ep->d_ino == 0)
+ 			continue;
+-		n = EPSTRLEN;
++		size_t n = strlen(ep->d_name);
++		if (n < 2)
++			continue;
+ 		if (ep->d_name[n-2] == '.' && ep->d_name[n-1] == 'c')
+ 			continue;
+ 		c = ep->d_name[0];
+ 		if (c>='a' && c<= 'z')
+ 			unlink(ep->d_name);
+ 	}
+-	CLOSEDIR;
++	closedir(dp);
+ 	if (ask)
+ 		return;
+ 	sprintf(where, "%s/%s/L%s", direct, sname, lesson);
+@@ -56,6 +41,7 @@
+ 	wrapup(1);
+ }
+ 
++void
+ fcopy(new,old)
+ char *new, *old;
+ {
+diff -ruN orig/tee.c port/tee.c
+--- orig/tee.c	2026-03-14 23:54:40
++++ port/tee.c	1970-01-01 01:00:00
+@@ -1,37 +0,0 @@
+-#ifndef lint
+-static char sccsid[] = "@(#)tee.c	4.2	(Berkeley)	4/25/83";
+-#endif not lint
+-
+-#include <stdio.h>
+-main()
+-{
+-	int f, c;
+-
+-	f = creat(".ocopy", 0666);
+-	while (read(0, &c, 1) == 1) {
+-		write (1, &c, 1);
+-		put(c, f);
+-	}
+-	fl(f);
+-	close(f);
+-}
+-
+-static char ln[BUFSIZ];
+-char *p = ln;
+-put(c, f)
+-{
+-	*p++ = c;
+-	if (c == '\n') {
+-		fl(f);
+-		p=ln;
+-	}
+-}
+-fl(f)
+-{
+-	register char *s;
+-
+-	s = ln;
+-	while (*s == '$' && *(s+1) == ' ')
+-		s += 2;
+-	write(f, s, p-s);
+-}
+diff -ruN orig/whatnow.c port/whatnow.c
+--- orig/whatnow.c	2026-03-14 23:54:40
++++ port/whatnow.c	2026-03-14 23:54:40
+@@ -8,6 +8,7 @@
+ extern	char	togo[];
+ extern	int	review;
+ 
++void
+ whatnow()
+ {
+ 	if (again) {
+diff -ruN orig/wrapup.c port/wrapup.c
+--- orig/wrapup.c	2026-03-14 23:54:40
++++ port/wrapup.c	2026-03-14 23:54:40
+@@ -8,6 +8,7 @@
+ 
+ extern char learnrc[];
+ 
++void
+ wrapup(n)
+ int n;
+ {
+@@ -22,11 +23,10 @@
+ 		if (fork() == 0) {
+ 			close(1);
+ 			open("/dev/tty", 1);
+-			execl("/bin/stty", "stty", "new", 0);
++			execlp("stty", "stty", "new", (char *)0);
+ 		}
+ #endif
+-		execl("/bin/rm", "rm", "-rf", dir, 0);
+-		execl("/usr/bin/rm", "rm", "-rf", dir, 0);
++		execlp("rm", "rm", "-rf", dir, (char *)0);
+ 		perror("bin/rm");
+ 		fprintf(stderr, "Wrapup:  can't find 'rm' command.\n");
+ 		exit(0);
