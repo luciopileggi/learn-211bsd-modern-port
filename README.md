@@ -6,7 +6,7 @@ tree or lesson files in this repository.
 
 ## Status
 
-- Bootstrap verified on modern macOS with Apple clang.
+- Bootstrap verified on a modern Unix-like system with a current Clang toolchain.
 - Historical sources and lessons are fetched from public archives.
 - This repository is intended to publish only original porting work.
 
@@ -16,12 +16,18 @@ tree or lesson files in this repository.
 cd legacy/learn-211bsd
 ./scripts/bootstrap.sh
 
-# run a course
-./work/port/run.sh C
-./work/port/run.sh files
-./work/port/run.sh editor
-./work/port/run.sh vi
+# start learn directly
+./work/port/learn
+
+# or start a specific course
+./work/port/learn C
+./work/port/learn files
+./work/port/learn editor
+./work/port/learn vi
 ```
+
+`./work/port/run.sh` is still available as a wrapper, but direct execution of
+`./work/port/learn` now works with the bundled lesson tree after bootstrap.
 
 ## Repository Scope
 
@@ -61,4 +67,4 @@ This repository does not contain:
 ## Notes
 
 - The `C` course includes support files (`getline.c`, `getnum.c`) that collide with modern standard-library symbols; the bootstrap script compiles them with a local rename only to generate the objects required by the lessons.
-- Not every interactive course has been validated end-to-end on modern macOS.
+- Not every interactive course has been validated end-to-end on modern Unix-like systems.
