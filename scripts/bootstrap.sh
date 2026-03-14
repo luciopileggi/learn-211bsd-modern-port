@@ -16,6 +16,8 @@ make -C "$ROOT/work/port" clean all
 
 "$ROOT/scripts/fetch-lessons.sh"
 
+find "$ROOT/runtime/share/learn" -name Init -type f -exec chmod 555 {} \;
+
 mkdir -p "$ROOT/runtime/share/learn/bin"
 cp \
 	"$ROOT/work/port/learn" \
