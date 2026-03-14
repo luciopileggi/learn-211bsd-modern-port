@@ -701,7 +701,7 @@ diff -ruN orig/mysys.c port/mysys.c
 Binary files orig/mysys.o and port/mysys.o differ
 diff -ruN orig/run.sh port/run.sh
 --- orig/run.sh	1970-01-01 01:00:00
-+++ port/run.sh	2026-03-14 23:57:08
++++ port/run.sh	2026-03-15 00:35:47
 @@ -0,0 +1,8 @@
 +#!/bin/sh
 +set -eu
@@ -710,7 +710,7 @@ diff -ruN orig/run.sh port/run.sh
 +ROOT="$(pwd)"
 +mkdir -p log runtime/share/learn/bin runtime/log
 +
-+exec ./learn "-$ROOT/runtime/share/learn" "$@"
++exec ./learn "-$ROOT/../../runtime/share/learn" "$@"
 diff -ruN orig/selsub.c port/selsub.c
 --- orig/selsub.c	2026-03-14 23:57:07
 +++ port/selsub.c	2026-03-14 23:57:08
