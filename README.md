@@ -41,6 +41,33 @@ tree, run:
 ./scripts/bootstrap.sh --clean
 ```
 
+## Install
+
+To install `learn` and its lesson tree under `/usr/local`:
+
+```sh
+./scripts/install.sh
+```
+
+This installs:
+
+- `learn` to `/usr/local/bin/learn`
+- the lesson tree and helper binaries to `/usr/local/share/learn`
+
+If `/usr/local` is not writable for your user, run it with elevated privileges.
+
+To install under a different prefix:
+
+```sh
+./scripts/install.sh --prefix /opt/learn
+```
+
+For staged installs:
+
+```sh
+./scripts/install.sh --prefix /usr/local --destdir /tmp/package-root
+```
+
 ## Repository Scope
 
 This repository contains:
@@ -48,6 +75,7 @@ This repository contains:
 - the modern port patch;
 - fetch scripts for the historical sources and lesson tree;
 - bootstrap/build scripts;
+- install script;
 - documentation and attribution notes.
 
 This repository does not contain:
