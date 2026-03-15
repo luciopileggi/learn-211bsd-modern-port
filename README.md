@@ -26,7 +26,6 @@ generated changes.
 - build tools: `cc`, `make`, `patch`
 - download tool: `curl`
 - a `vi`-compatible editor available on `PATH` as `vi` for the `vi` course
-- enough local space for the fetched sources, lesson tree, and generated build output
 
 ## Quick Start
 
