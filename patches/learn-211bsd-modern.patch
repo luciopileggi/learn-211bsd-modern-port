@@ -187,7 +187,7 @@ diff -ruN orig/compat.c port/compat.c
 Binary files orig/compat.o and port/compat.o differ
 diff -ruN orig/copy.c port/copy.c
 --- orig/copy.c	2026-03-14 23:57:06
-+++ port/copy.c	2026-03-15 01:36:01
++++ port/copy.c	2026-03-15 05:59:41
 @@ -7,23 +7,22 @@
  #include "lrnref.h"
  
@@ -219,7 +219,18 @@ diff -ruN orig/copy.c port/copy.c
  	int nmatch = 0;
  	long mark;
  
-@@ -209,13 +208,13 @@
+@@ -32,6 +31,10 @@
+ 	for (;;) {
+ 		if (pgets(s, prompt, fin) == 0)
+ 			if (fin == stdin) {
++				if (feof(stdin)) {
++					more = 0;
++					return;
++				}
+ 				fprintf(stderr, "Type \"bye\" if you want to leave learn.\n");
+ 				fflush(stderr);
+ 				clearerr(stdin);
+@@ -209,13 +212,13 @@
  		case LOG:	/* logfiles should be created mode 666 */
  			if (!logging)
  				break;
@@ -238,7 +249,7 @@ diff -ruN orig/copy.c port/copy.c
  			tod[24] = 0;
  			fprintf(f, "%s L%-6s %s %2d %s\n", tod,
  				todo, status? "fail" : "pass", speed, pwline);
-@@ -242,6 +241,7 @@
+@@ -242,6 +245,7 @@
  		return(0);
  }
  
@@ -246,7 +257,7 @@ diff -ruN orig/copy.c port/copy.c
  trim(s)
  char *s;
  {
-@@ -251,6 +251,7 @@
+@@ -251,6 +255,7 @@
  		*s=0;
  }
  
@@ -254,7 +265,7 @@ diff -ruN orig/copy.c port/copy.c
  scopy(fi, fo)	/* copy fi to fo until a line with #
  		 * sequence "#\n" means a line not ending with \n
  		 * control-M's are filtered out */
-@@ -346,6 +347,7 @@
+@@ -346,6 +351,7 @@
  	return(c ? s : NULL);
  }
  
