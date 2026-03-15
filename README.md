@@ -34,6 +34,13 @@ cd learn-211bsd-modern-port
 ./work/bin/learn vi
 ```
 
+To force a full rebuild of generated sources, binaries, and the fetched lesson
+tree, run:
+
+```sh
+./scripts/bootstrap.sh --clean
+```
+
 ## Repository Scope
 
 This repository contains:
@@ -57,6 +64,9 @@ This repository does not contain:
 3. Builds `learn`, `lrntee`, and `lcount`, then copies them to `work/bin/`.
 4. Downloads the historical lesson tree into `runtime/share/learn/`.
 5. Installs the binaries into `runtime/share/learn/bin/`.
+
+Passing `--clean` removes existing generated `work/` and `runtime/` content
+before running the bootstrap steps above.
 
 ## Historical sources
 

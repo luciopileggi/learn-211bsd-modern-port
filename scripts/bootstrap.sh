@@ -3,6 +3,16 @@ set -eu
 
 ROOT="$(CDPATH= cd -- "$(dirname "$0")/.." && pwd)"
 
+if [ "${1:-}" = "--clean" ]; then
+	rm -rf "$ROOT/work" "$ROOT/runtime"
+	shift
+fi
+
+if [ "$#" -ne 0 ]; then
+	printf '%s\n' "usage: $0 [--clean]" >&2
+	exit 2
+fi
+
 "$ROOT/scripts/fetch-sources.sh"
 rm -rf "$ROOT/work/src" "$ROOT/work/bin"
 mkdir -p "$ROOT/work/src" "$ROOT/work/bin"
