@@ -187,15 +187,18 @@ diff -ruN orig/compat.c port/compat.c
 Binary files orig/compat.o and port/compat.o differ
 diff -ruN orig/copy.c port/copy.c
 --- orig/copy.c	2026-03-14 23:57:06
-+++ port/copy.c	2026-03-14 23:57:08
-@@ -8,12 +8,12 @@
++++ port/copy.c	2026-03-15 01:36:01
+@@ -7,23 +7,22 @@
+ #include "lrnref.h"
  
  char togo[50];
- char last[100];
+-char last[100];
 -char logf[100];
-+char log_file[100];
- char subdir[100];
+-char subdir[100];
 -extern char *ctime();
++char last[BUFSIZ];
++char log_file[BUFSIZ];
++char subdir[BUFSIZ];
  extern int review;
  int noclobber;
  
@@ -203,9 +206,10 @@ diff -ruN orig/copy.c port/copy.c
  copy(prompt, fin)
  int prompt;
  FILE *fin;
-@@ -21,9 +21,8 @@
+ {
  	FILE *fout, *f;
- 	char s[100], t[100], s1[100], nm[30];
+-	char s[100], t[100], s1[100], nm[30];
++	char s[BUFSIZ], t[100], s1[BUFSIZ], nm[BUFSIZ];
  	char *r, *tod, c;
 -	int *p, tv[2];
 -	extern int intrpt(), *action();
@@ -261,15 +265,19 @@ diff -ruN orig/copy.c port/copy.c
 Binary files orig/copy.o and port/copy.o differ
 diff -ruN orig/dounit.c port/dounit.c
 --- orig/dounit.c	2026-03-14 23:57:06
-+++ port/dounit.c	2026-03-14 23:57:08
-@@ -8,6 +8,7 @@
++++ port/dounit.c	2026-03-15 01:33:48
+@@ -8,9 +8,10 @@
  int	remind = 2;		/* to remind user of "again" and "bye" */
  extern	int	noclobber;
  
 +void
  dounit()
  {
- 	char tbuff[100];
+-	char tbuff[100];
++	char tbuff[BUFSIZ];
+ 
+ 	if (todo == 0)
+ 		return;
 @@ -48,7 +49,8 @@
  			wrong > 1 ? "still " : "");
  		fflush(stdout);
@@ -288,7 +296,16 @@ diff -ruN orig/dounit.c port/dounit.c
 Binary files orig/dounit.o and port/dounit.o differ
 diff -ruN orig/getlesson.c port/getlesson.c
 --- orig/getlesson.c	2026-03-14 23:57:06
-+++ port/getlesson.c	2026-03-14 23:57:08
++++ port/getlesson.c	2026-03-15 01:33:48
+@@ -9,7 +9,7 @@
+ getlesson()
+ {
+ 	register char *p;
+-	char ans[80], line[200];
++	char ans[BUFSIZ], line[200];
+ 	int isnum, found, fd[2];
+ 	FILE *fp;
+ 
 @@ -40,9 +40,11 @@
  	if (fork() == 0) {
  		close(fd[0]);
@@ -540,10 +557,13 @@ diff -ruN orig/makpipe.c port/makpipe.c
 Binary files orig/makpipe.o and port/makpipe.o differ
 diff -ruN orig/maktee.c port/maktee.c
 --- orig/maktee.c	2026-03-14 23:57:07
-+++ port/maktee.c	2026-03-14 23:57:08
-@@ -9,6 +9,7 @@
++++ port/maktee.c	2026-03-15 01:36:01
+@@ -7,8 +7,9 @@
+ #include "lrnref.h"
+ 
  static int oldout;
- static char tee[50];
+-static char tee[50];
++static char tee[BUFSIZ];
  
 +int
  maktee()
@@ -592,7 +612,7 @@ diff -ruN orig/mem.c port/mem.c
 Binary files orig/mem.o and port/mem.o differ
 diff -ruN orig/mysys.c port/mysys.c
 --- orig/mysys.c	2026-03-14 23:57:07
-+++ port/mysys.c	2026-03-14 23:57:08
++++ port/mysys.c	2026-03-15 01:34:59
 @@ -4,6 +4,7 @@
  
  #include "stdio.h"
@@ -609,7 +629,7 @@ diff -ruN orig/mysys.c port/mysys.c
  
  /*
   * This routine edits the PATH environment variable so that
-@@ -19,19 +21,18 @@
+@@ -19,19 +21,17 @@
   * will not print \r's, and will be usable with open mode.
   */
  
@@ -620,18 +640,18 @@ diff -ruN orig/mysys.c port/mysys.c
  	register int i;
  	extern char **environ;
 -	extern char *direct;
- 	char path[BUFSIZ], exinit[BUFSIZ];
+-	char path[BUFSIZ], exinit[BUFSIZ];
 -	char *malloc();
++	char path[8192], exinit[8192];
  
  	sprintf(path, "PATH=%s/bin:/usr/cc/bin:/usr/ucb/bin:", direct);
  	sprintf(exinit, "EXINIT=set prompt noopt open window=23");
  #if BSD4_2
 -	system("stty old");
-+	lrn_system("stty old");
  	for (p=environ,i=3; *p != 0 && i < EMAX; p++,i++)   {
  #else
  	for (p=environ,i=2; *p != 0 && i < EMAX; p++,i++)   {
-@@ -60,6 +61,7 @@
+@@ -60,6 +60,7 @@
  	environ = envp;
  }
  
@@ -639,7 +659,7 @@ diff -ruN orig/mysys.c port/mysys.c
  mysys(s)
  char *s;
  {
-@@ -96,11 +98,11 @@
+@@ -96,11 +97,11 @@
  	}
  	switch (type) {
  	case HARD:
@@ -653,7 +673,7 @@ diff -ruN orig/mysys.c port/mysys.c
  	case EASY:
  		strcpy(p,s);
  		nv = getargs(p, np);
-@@ -124,14 +126,15 @@
+@@ -124,14 +125,15 @@
  				sprintf(b, "/usr/bin/%s", t);
  				execv(b, np);
  				perror(b); */
@@ -671,7 +691,7 @@ diff -ruN orig/mysys.c port/mysys.c
  }
  
  /*
-@@ -141,7 +144,8 @@
+@@ -141,7 +143,8 @@
   *	user gets the behavior he expects.
   */
  
@@ -681,7 +701,7 @@ diff -ruN orig/mysys.c port/mysys.c
  char *s;
  {
  	int status, pid, w;
-@@ -152,7 +156,7 @@
+@@ -152,7 +155,7 @@
  	if ((pid = fork()) == 0) {
  		signal(SIGINT, SIG_DFL);
  		signal(SIGQUIT, SIG_DFL);
@@ -690,7 +710,7 @@ diff -ruN orig/mysys.c port/mysys.c
  		_exit(127);
  	}
  	while ((w = wait(&status)) != pid && w != -1)
-@@ -164,6 +168,7 @@
+@@ -164,6 +167,7 @@
  	return(status);
  }
  
@@ -713,18 +733,22 @@ diff -ruN orig/run.sh port/run.sh
 +exec ./learn "-$ROOT/../../runtime/share/learn" "$@"
 diff -ruN orig/selsub.c port/selsub.c
 --- orig/selsub.c	2026-03-14 23:57:07
-+++ port/selsub.c	2026-03-14 23:57:08
-@@ -8,7 +8,9 @@
++++ port/selsub.c	2026-03-15 01:36:01
+@@ -7,17 +7,18 @@
+ #include "sys/stat.h"
  #include "lrnref.h"
  
- char learnrc[100];
+-char learnrc[100];
++char learnrc[BUFSIZ];
 +void chknam(char *name);
  
 +void
  selsub(argc,argv)
  char *argv[];
  {
-@@ -17,7 +19,6 @@
+-	char ans1[100];
++	char ans1[BUFSIZ];
+ 	static char ans2[40];
  	static char dirname[40];
  	static char subname[40];
  	FILE *fp;
@@ -823,8 +847,8 @@ diff -ruN orig/selsub.c port/selsub.c
 Binary files orig/selsub.o and port/selsub.o differ
 diff -ruN orig/selunit.c port/selunit.c
 --- orig/selunit.c	2026-03-14 23:57:08
-+++ port/selunit.c	2026-03-14 23:57:08
-@@ -8,6 +8,7 @@
++++ port/selunit.c	2026-03-15 01:33:48
+@@ -8,14 +8,14 @@
  int	nsave	= 0;
  int	review	= 0;
  
@@ -832,8 +856,9 @@ diff -ruN orig/selunit.c port/selunit.c
  selunit()
  {
  	static char dobuff[50];
-@@ -15,7 +16,6 @@
- 	char fnam[80], s[80], zb[200];
+ 	static char saved[20];
+-	char fnam[80], s[80], zb[200];
++	char fnam[BUFSIZ], s[80], zb[200];
  	char posslev[20][20];
  	int diff[20], i, k, m, n, best, alts;
 -	char *getlesson();
@@ -875,7 +900,7 @@ diff -ruN orig/selunit.c port/selunit.c
 Binary files orig/selunit.o and port/selunit.o differ
 diff -ruN orig/start.c port/start.c
 --- orig/start.c	2026-03-14 23:57:08
-+++ port/start.c	2026-03-14 23:57:08
++++ port/start.c	2026-03-15 01:33:48
 @@ -4,48 +4,33 @@
  
  #include "stdio.h"
@@ -892,11 +917,12 @@ diff -ruN orig/start.c port/start.c
 -	struct direct dbuf;
 -	register struct direct *ep = &dbuf;	/* directory entry pointer */
 -	int c, n;
-+	struct dirent *ep;
-+	int c;
- 	char where [100];
+-	char where [100];
 -
 -#ifdef BSD4_2
++	struct dirent *ep;
++	int c;
++	char where [BUFSIZ];
  	DIR *dp;
 -#define OPENDIR(s)	((dp = opendir(s)) != NULL)
 -#define DIRLOOP(s)	for (s = readdir(dp); s != NULL; s = readdir(dp))
@@ -998,7 +1024,7 @@ diff -ruN orig/whatnow.c port/whatnow.c
 Binary files orig/whatnow.o and port/whatnow.o differ
 diff -ruN orig/wrapup.c port/wrapup.c
 --- orig/wrapup.c	2026-03-14 23:57:08
-+++ port/wrapup.c	2026-03-14 23:57:08
++++ port/wrapup.c	2026-03-15 01:34:35
 @@ -8,6 +8,7 @@
  
  extern char learnrc[];
@@ -1007,14 +1033,17 @@ diff -ruN orig/wrapup.c port/wrapup.c
  wrapup(n)
  int n;
  {
-@@ -22,11 +23,10 @@
- 		if (fork() == 0) {
- 			close(1);
- 			open("/dev/tty", 1);
+@@ -18,15 +19,7 @@
+ 	chdir("..");
+ 	if (fork() == 0) {
+ 		signal(SIGHUP, SIG_IGN);
+-#if BSD4_2
+-		if (fork() == 0) {
+-			close(1);
+-			open("/dev/tty", 1);
 -			execl("/bin/stty", "stty", "new", 0);
-+			execlp("stty", "stty", "new", (char *)0);
- 		}
- #endif
+-		}
+-#endif
 -		execl("/bin/rm", "rm", "-rf", dir, 0);
 -		execl("/usr/bin/rm", "rm", "-rf", dir, 0);
 +		execlp("rm", "rm", "-rf", dir, (char *)0);
