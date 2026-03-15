@@ -10,7 +10,7 @@ tasks directly at the terminal. This repository packages a modernized way to
 fetch, patch, build, and run that historical software on current Unix-like
 systems without redistributing the 2.11BSD sources and lesson files.
 
-For transparency: this porting bundle was produced mostly through AI-assisted
+This porting bundle was produced mostly through AI-assisted
 "vibe coding", with iterative manual testing, review, and correction around the
 generated changes.
 
