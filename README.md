@@ -4,6 +4,16 @@ Patch, bootstrap scripts, and documentation for building a modern local copy of
 the historical 2.11BSD `learn` program, without shipping the original source
 tree or lesson files in this repository.
 
+`learn` is an old Unix teaching tool from the BSD era: an interactive,
+lesson-driven program for practicing basic shell, editor, and C programming
+tasks directly at the terminal. This repository packages a modernized way to
+fetch, patch, build, and run that historical software on current Unix-like
+systems without redistributing the original 2.11BSD sources and lesson files.
+
+For transparency: this porting bundle was produced mostly through AI-assisted
+"vibe coding", with iterative manual testing, review, and correction around the
+generated changes.
+
 ## Status
 
 - Bootstrap verified on a modern Unix-like system with a current Clang toolchain.
@@ -99,9 +109,13 @@ before running the bootstrap steps above.
 ## Historical sources
 
 - [usr.bin/learn](https://www.retro11.de/ouxr/211bsd/usr/src/usr.bin/learn/)
+  URL: `https://www.retro11.de/ouxr/211bsd/usr/src/usr.bin/learn/`
 - [lesson tree](https://www.retro11.de/ouxr/211bsd/usr/src/share/learn/)
+  URL: `https://www.retro11.de/ouxr/211bsd/usr/src/share/learn/`
 - [historical manual page](https://man.freebsd.org/cgi/man.cgi?query=learn&manpath=2.9.1+BSD)
+  URL: `https://man.freebsd.org/cgi/man.cgi?query=learn&manpath=2.9.1+BSD`
 - [alternative Docker-based project](https://github.com/goblimey/learn-unix)
+  URL: `https://github.com/goblimey/learn-unix`
 
 ## License
 
