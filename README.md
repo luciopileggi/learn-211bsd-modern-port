@@ -4,11 +4,11 @@ Patch, bootstrap scripts, and documentation for building a modern local copy of
 the historical 2.11BSD `learn` program, without shipping the original source
 tree or lesson files in this repository.
 
-`learn` is an old Unix teaching tool from the BSD era: an interactive,
+`learn` is an old Unix teaching tool: an interactive,
 lesson-driven program for practicing basic shell, editor, and C programming
 tasks directly at the terminal. This repository packages a modernized way to
 fetch, patch, build, and run that historical software on current Unix-like
-systems without redistributing the original 2.11BSD sources and lesson files.
+systems without redistributing the 2.11BSD sources and lesson files.
 
 For transparency: this porting bundle was produced mostly through AI-assisted
 "vibe coding", with iterative manual testing, review, and correction around the
