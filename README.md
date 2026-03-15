@@ -98,10 +98,10 @@ before running the bootstrap steps above.
 
 ## Historical sources
 
-- `usr.bin/learn`: `https://www.retro11.de/ouxr/211bsd/usr/src/usr.bin/learn/`
-- lesson tree: `https://www.retro11.de/ouxr/211bsd/usr/src/share/learn/`
-- historical manual page: `https://man.freebsd.org/cgi/man.cgi?query=learn&manpath=2.9.1+BSD`
-- alternative Docker-based project: `https://github.com/goblimey/learn-unix`
+- [usr.bin/learn](https://www.retro11.de/ouxr/211bsd/usr/src/usr.bin/learn/)
+- [lesson tree](https://www.retro11.de/ouxr/211bsd/usr/src/share/learn/)
+- [historical manual page](https://man.freebsd.org/cgi/man.cgi?query=learn&manpath=2.9.1+BSD)
+- [alternative Docker-based project](https://github.com/goblimey/learn-unix)
 
 ## License
 
