@@ -10,6 +10,13 @@ tree or lesson files in this repository.
 - Historical sources and lessons are fetched from public archives.
 - This repository is intended to publish only original porting work.
 
+## Prerequisites
+
+- POSIX shell utilities: `sh`, `cp`, `rm`, `mkdir`, `find`, `sed`
+- build tools: `cc`, `make`, `patch`
+- download tool: `curl`
+- enough local space for the fetched sources, lesson tree, and generated build output
+
 ## Quick Start
 
 ```sh
@@ -17,13 +24,13 @@ cd learn-211bsd-modern-port
 ./scripts/bootstrap.sh
 
 # start learn
-./work/port/learn
+./work/bin/learn
 
 # or start a specific course
-./work/port/learn C
-./work/port/learn files
-./work/port/learn editor
-./work/port/learn vi
+./work/bin/learn C
+./work/bin/learn files
+./work/bin/learn editor
+./work/bin/learn vi
 ```
 
 ## Repository Scope
@@ -45,8 +52,8 @@ This repository does not contain:
 ## Bootstrap Steps
 
 1. Downloads the original 2.11BSD `learn` sources into `work/orig/`.
-2. Applies the porting patch and creates `work/port/`.
-3. Builds `learn`, `lrntee`, and `lcount`.
+2. Applies the porting patch and creates a patched source tree in `work/src/`.
+3. Builds `learn`, `lrntee`, and `lcount`, then copies them to `work/bin/`.
 4. Downloads the historical lesson tree into `runtime/share/learn/`.
 5. Installs the binaries into `runtime/share/learn/bin/`.
 
@@ -64,4 +71,5 @@ This repository does not contain:
 ## Notes
 
 - The `C` course includes support files (`getline.c`, `getnum.c`) that collide with modern standard-library symbols; the bootstrap script compiles them with a local rename only to generate the objects required by the lessons.
+- Generated patched sources live in `work/src/`; generated runnable binaries live in `work/bin/`.
 - Not every interactive course has been validated end-to-end on modern Unix-like systems.
