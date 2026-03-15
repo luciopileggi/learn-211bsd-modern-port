@@ -1,6 +1,6 @@
 diff -ruN orig/Makefile port/Makefile
 --- orig/Makefile	1970-01-01 01:00:00
-+++ port/Makefile	2026-03-14 23:57:08
++++ port/Makefile	2026-03-15 11:17:03
 @@ -0,0 +1,21 @@
 +CC ?= cc
 +CFLAGS ?= -O2
@@ -25,7 +25,7 @@ diff -ruN orig/Makefile port/Makefile
 +	rm -f *.o learn lrntee lcount
 diff -ruN orig/compat.c port/compat.c
 --- orig/compat.c	1970-01-01 01:00:00
-+++ port/compat.c	2026-03-14 23:57:08
++++ port/compat.c	2026-03-15 11:17:03
 @@ -0,0 +1,10 @@
 +#include "lrnref.h"
 +
@@ -37,10 +37,9 @@ diff -ruN orig/compat.c port/compat.c
 +	trim(buf);
 +	return buf;
 +}
-Binary files orig/compat.o and port/compat.o differ
 diff -ruN orig/copy.c port/copy.c
 --- orig/copy.c	1970-01-01 01:00:00
-+++ port/copy.c	2026-03-15 10:59:12
++++ port/copy.c	2026-03-15 11:17:03
 @@ -0,0 +1,373 @@
 +#if	!defined(lint) && defined(DOSCCS)
 +static char sccsid[] = "@(#)copy.c	4.3.1	(2.11BSD)	1996/10/23";
@@ -415,10 +414,9 @@ diff -ruN orig/copy.c port/copy.c
 +	fclose(scrin);
 +	scrin = NULL;
 +}
-Binary files orig/copy.o and port/copy.o differ
 diff -ruN orig/dounit.c port/dounit.c
 --- orig/dounit.c	1970-01-01 01:00:00
-+++ port/dounit.c	2026-03-15 01:33:48
++++ port/dounit.c	2026-03-15 11:17:03
 @@ -0,0 +1,76 @@
 +#ifndef lint
 +static char sccsid[] = "@(#)dounit.c	4.2	(Berkeley)	4/25/83";
@@ -496,10 +494,9 @@ diff -ruN orig/dounit.c port/dounit.c
 +	}
 +	setdid(todo, sequence++);
 +}
-Binary files orig/dounit.o and port/dounit.o differ
 diff -ruN orig/getlesson.c port/getlesson.c
 --- orig/getlesson.c	1970-01-01 01:00:00
-+++ port/getlesson.c	2026-03-15 01:33:48
++++ port/getlesson.c	2026-03-15 11:17:03
 @@ -0,0 +1,75 @@
 +#ifndef lint
 +static char sccsid[] = "@(#)getlesson.c	4.2	(Berkeley)	4/26/83";
@@ -576,11 +573,9 @@ diff -ruN orig/getlesson.c port/getlesson.c
 +	printf("There is no lesson containing \"%s\".\n", level);
 +	return(0);
 +}
-Binary files orig/getlesson.o and port/getlesson.o differ
-Binary files orig/lcount and port/lcount differ
 diff -ruN orig/lcount.c port/lcount.c
 --- orig/lcount.c	1970-01-01 01:00:00
-+++ port/lcount.c	2026-03-14 23:57:08
++++ port/lcount.c	2026-03-15 11:17:03
 @@ -0,0 +1,16 @@
 +#ifndef lint
 +static char sccsid[] = "@(#)lcount.c	4.2	(Berkeley)	4/25/83";
@@ -598,11 +593,9 @@ diff -ruN orig/lcount.c port/lcount.c
 +			n++;
 +	printf("%d\n", n);
 +}
-Binary files orig/lcount.o and port/lcount.o differ
-Binary files orig/learn and port/learn differ
 diff -ruN orig/learn.c port/learn.c
 --- orig/learn.c	1970-01-01 01:00:00
-+++ port/learn.c	2026-03-15 00:27:59
++++ port/learn.c	2026-03-15 11:17:03
 @@ -0,0 +1,100 @@
 +#if	!defined(lint) && defined(DOSCCS)
 +static char sccsid[] = "@(#)learn.c	4.4.2	(2.11BSD)	1997/10/2";
@@ -704,10 +697,9 @@ diff -ruN orig/learn.c port/learn.c
 +	ungetc('\n', stdin);
 +	signal(SIGINT, intrpt);
 +}
-Binary files orig/learn.o and port/learn.o differ
 diff -ruN orig/list.c port/list.c
 --- orig/list.c	1970-01-01 01:00:00
-+++ port/list.c	2026-03-14 23:57:08
++++ port/list.c	2026-03-15 11:17:03
 @@ -0,0 +1,37 @@
 +#ifndef lint
 +static char sccsid[] = "@(#)list.c	4.2	(Berkeley)	4/25/83";
@@ -746,10 +738,9 @@ diff -ruN orig/list.c port/list.c
 +	(void)sig;
 +	istop=0;
 +}
-Binary files orig/list.o and port/list.o differ
 diff -ruN orig/lrnref.h port/lrnref.h
 --- orig/lrnref.h	1970-01-01 01:00:00
-+++ port/lrnref.h	2026-03-15 10:58:30
++++ port/lrnref.h	2026-03-15 11:17:03
 @@ -0,0 +1,104 @@
 +/*	lrnref.h	4.4	86/05/15	*/
 +
@@ -855,10 +846,9 @@ diff -ruN orig/lrnref.h port/lrnref.h
 +void wrapup(int n);
 +
 +#endif
-Binary files orig/lrntee and port/lrntee differ
 diff -ruN orig/lrntee.c port/lrntee.c
 --- orig/lrntee.c	1970-01-01 01:00:00
-+++ port/lrntee.c	2026-03-14 23:57:08
++++ port/lrntee.c	2026-03-15 11:17:03
 @@ -0,0 +1,49 @@
 +#ifndef lint
 +static char sccsid[] = "@(#)lrntee.c	4.3	(Berkeley)	5/15/86";
@@ -909,10 +899,9 @@ diff -ruN orig/lrntee.c port/lrntee.c
 +		s += 2;
 +	write(f, s, p-s);
 +}
-File orig/lrntee.o is a unknown type while file port/lrntee.o is a unknown type
 diff -ruN orig/makpipe.c port/makpipe.c
 --- orig/makpipe.c	1970-01-01 01:00:00
-+++ port/makpipe.c	2026-03-14 23:57:08
++++ port/makpipe.c	2026-03-15 11:17:03
 @@ -0,0 +1,24 @@
 +#ifndef lint
 +static char sccsid[] = "@(#)makpipe.c	4.3	(Berkeley)	5/15/86";
@@ -938,10 +927,9 @@ diff -ruN orig/makpipe.c port/makpipe.c
 +	sleep(2);	/* so shell won't eat up too much input */
 +	return(f[1]);
 +}
-File orig/makpipe.o is a unknown type while file port/makpipe.o is a unknown type
 diff -ruN orig/maktee.c port/maktee.c
 --- orig/maktee.c	1970-01-01 01:00:00
-+++ port/maktee.c	2026-03-15 01:36:01
++++ port/maktee.c	2026-03-15 11:17:03
 @@ -0,0 +1,55 @@
 +#ifndef lint
 +static char sccsid[] = "@(#)maktee.c	4.2	(Berkeley)	4/25/83";
@@ -998,10 +986,9 @@ diff -ruN orig/maktee.c port/maktee.c
 +	close(oldout);
 +	wait(&x);
 +}
-File orig/maktee.o is a unknown type while file port/maktee.o is a unknown type
 diff -ruN orig/mem.c port/mem.c
 --- orig/mem.c	1970-01-01 01:00:00
-+++ port/mem.c	2026-03-14 23:57:08
++++ port/mem.c	2026-03-15 11:17:03
 @@ -0,0 +1,118 @@
 +#ifndef lint
 +static char sccsid[] = "@(#)mem.c	4.3	(Berkeley)	5/15/86";
@@ -1121,10 +1108,9 @@ diff -ruN orig/mem.c port/mem.c
 +		printf("%3ld lesson %7s sequence %3d\n",
 +			pw-which, pw->w_less, pw->w_seq);
 +}
-File orig/mem.o is a unknown type while file port/mem.o is a unknown type
 diff -ruN orig/mysys.c port/mysys.c
 --- orig/mysys.c	1970-01-01 01:00:00
-+++ port/mysys.c	2026-03-15 01:34:59
++++ port/mysys.c	2026-03-15 11:17:03
 @@ -0,0 +1,190 @@
 +#ifndef lint
 +static char sccsid[] = "@(#)mysys.c	4.5	(Berkeley)	5/15/86";
@@ -1316,10 +1302,9 @@ diff -ruN orig/mysys.c port/mysys.c
 +	}
 +	return(i);
 +}
-File orig/mysys.o is a unknown type while file port/mysys.o is a unknown type
 diff -ruN orig/run.sh port/run.sh
 --- orig/run.sh	1970-01-01 01:00:00
-+++ port/run.sh	2026-03-15 00:35:47
++++ port/run.sh	2026-03-15 11:17:03
 @@ -0,0 +1,8 @@
 +#!/bin/sh
 +set -eu
@@ -1331,7 +1316,7 @@ diff -ruN orig/run.sh port/run.sh
 +exec ./learn "-$ROOT/../../runtime/share/learn" "$@"
 diff -ruN orig/selsub.c port/selsub.c
 --- orig/selsub.c	1970-01-01 01:00:00
-+++ port/selsub.c	2026-03-15 01:36:01
++++ port/selsub.c	2026-03-15 11:17:03
 @@ -0,0 +1,165 @@
 +#ifndef lint
 +static char sccsid[] = "@(#)selsub.c	4.3	(Berkeley)	5/15/86";
@@ -1498,10 +1483,9 @@ diff -ruN orig/selsub.c port/selsub.c
 +	closedir(dp);
 +	return n - 2;				/* minus . and .. */
 +}
-File orig/selsub.o is a unknown type while file port/selsub.o is a unknown type
 diff -ruN orig/selunit.c port/selunit.c
 --- orig/selunit.c	1970-01-01 01:00:00
-+++ port/selunit.c	2026-03-15 01:33:48
++++ port/selunit.c	2026-03-15 11:17:03
 @@ -0,0 +1,119 @@
 +#ifndef lint
 +static char sccsid[] = "@(#)selunit.c	4.3	(Berkeley)	5/15/86";
@@ -1622,10 +1606,9 @@ diff -ruN orig/selunit.c port/selunit.c
 +	b = (int)time(NULL) + 10 * garbage++;
 +	return(b&077777);
 +}
-File orig/selunit.o is a unknown type while file port/selunit.o is a unknown type
 diff -ruN orig/start.c port/start.c
 --- orig/start.c	1970-01-01 01:00:00
-+++ port/start.c	2026-03-15 01:33:48
++++ port/start.c	2026-03-15 11:17:03
 @@ -0,0 +1,58 @@
 +#ifndef lint
 +static char sccsid[] = "@(#)start.c	4.5	(Berkeley)	5/15/86";
@@ -1685,10 +1668,9 @@ diff -ruN orig/start.c port/start.c
 +	close(fn);
 +	close(fo);
 +}
-File orig/start.o is a unknown type while file port/start.o is a unknown type
 diff -ruN orig/whatnow.c port/whatnow.c
 --- orig/whatnow.c	1970-01-01 01:00:00
-+++ port/whatnow.c	2026-03-14 23:57:08
++++ port/whatnow.c	2026-03-15 11:17:03
 @@ -0,0 +1,51 @@
 +#ifndef lint
 +static char sccsid[] = "@(#)whatnow.c	4.2	(Berkeley)	4/25/83";
@@ -1741,10 +1723,9 @@ diff -ruN orig/whatnow.c port/whatnow.c
 +		fflush(stdout);
 +	}
 +}
-File orig/whatnow.o is a unknown type while file port/whatnow.o is a unknown type
 diff -ruN orig/wrapup.c port/wrapup.c
 --- orig/wrapup.c	1970-01-01 01:00:00
-+++ port/wrapup.c	2026-03-15 01:34:35
++++ port/wrapup.c	2026-03-15 11:17:03
 @@ -0,0 +1,40 @@
 +#ifndef lint
 +static char sccsid[] = "@(#)wrapup.c	4.3	(Berkeley)	5/15/86";
@@ -1786,4 +1767,3 @@ diff -ruN orig/wrapup.c port/wrapup.c
 +	wait(0);
 +	exit(n);
 +}
-File orig/wrapup.o is a unknown type while file port/wrapup.o is a unknown type

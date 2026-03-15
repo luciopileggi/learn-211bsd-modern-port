@@ -5,7 +5,7 @@ ROOT="$(CDPATH= cd -- "$(dirname "$0")/.." && pwd)"
 
 "$ROOT/scripts/fetch-sources.sh"
 rm -rf "$ROOT/work/port"
-cp -R "$ROOT/work/orig" "$ROOT/work/port"
+mkdir -p "$ROOT/work/port"
 sed \
 	-e 's@^diff -ruN orig/@diff -ruN a/@' \
 	-e 's@^--- orig/@--- a/@' \
@@ -41,4 +41,4 @@ cc -std=gnu89 -c \
 	"$ROOT/runtime/share/learn/C/getnum.c" \
 	-o "$ROOT/runtime/share/learn/C/getnum.o"
 
-printf '%s\n' "Bootstrap completo. Avvio: $ROOT/work/port/run.sh C"
+printf '%s\n' "Bootstrap complete. Start with: $ROOT/work/port/learn"
