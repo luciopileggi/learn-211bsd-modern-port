@@ -13,7 +13,7 @@ tree or lesson files in this repository.
 ## Quick Start
 
 ```sh
-cd legacy/learn-211bsd
+cd learn-211bsd-modern-port
 ./scripts/bootstrap.sh
 
 # start learn
