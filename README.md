@@ -103,8 +103,8 @@ before running the bootstrap steps above.
 
 ## License
 
-- [LICENSE](/Users/lucio/Documents/Projects/Hacking/thegame/legacy/learn-211bsd/LICENSE) applies only to the patch, scripts, and documentation present in this repository.
-- Historical files downloaded during bootstrap are not covered by the repository MIT license.
+- [LICENSE](LICENSE) applies only to the patch, scripts, and documentation present in this repository.
+- Historical files downloaded during bootstrap are not covered by the repository BSD-2-Clause license.
 - Before redistributing fetched material, review the original notices included in those files or in the corresponding historical archives.
 
 ## Notes

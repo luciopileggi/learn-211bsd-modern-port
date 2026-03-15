@@ -8,7 +8,7 @@ The original content of this repository is limited to:
 - fetch/build/bootstrap scripts;
 - supporting documentation.
 
-The MIT license included in this repository applies only to those original
+The BSD-2-Clause license included in this repository applies only to those original
 contents. It does not apply to historical files downloaded by the scripts.
 
 Before redistributing historical files downloaded through this repository's
