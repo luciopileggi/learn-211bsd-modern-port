@@ -1,6 +1,6 @@
 diff -ruN orig/Makefile port/Makefile
 --- orig/Makefile	1970-01-01 01:00:00
-+++ port/Makefile	2026-03-15 11:33:07
++++ port/Makefile	2026-03-15 11:36:04
 @@ -0,0 +1,21 @@
 +CC ?= cc
 +CFLAGS ?= -O2
@@ -25,7 +25,7 @@ diff -ruN orig/Makefile port/Makefile
 +	rm -f *.o learn lrntee lcount
 diff -ruN orig/compat.c port/compat.c
 --- orig/compat.c	1970-01-01 01:00:00
-+++ port/compat.c	2026-03-15 11:33:07
++++ port/compat.c	2026-03-15 11:36:04
 @@ -0,0 +1,10 @@
 +#include "lrnref.h"
 +
@@ -39,7 +39,7 @@ diff -ruN orig/compat.c port/compat.c
 +}
 diff -ruN orig/copy.c port/copy.c
 --- orig/copy.c	1970-01-01 01:00:00
-+++ port/copy.c	2026-03-15 11:33:07
++++ port/copy.c	2026-03-15 11:36:04
 @@ -0,0 +1,373 @@
 +#if	!defined(lint) && defined(DOSCCS)
 +static char sccsid[] = "@(#)copy.c	4.3.1	(2.11BSD)	1996/10/23";
@@ -416,7 +416,7 @@ diff -ruN orig/copy.c port/copy.c
 +}
 diff -ruN orig/dounit.c port/dounit.c
 --- orig/dounit.c	1970-01-01 01:00:00
-+++ port/dounit.c	2026-03-15 11:33:07
++++ port/dounit.c	2026-03-15 11:36:04
 @@ -0,0 +1,76 @@
 +#ifndef lint
 +static char sccsid[] = "@(#)dounit.c	4.2	(Berkeley)	4/25/83";
@@ -496,7 +496,7 @@ diff -ruN orig/dounit.c port/dounit.c
 +}
 diff -ruN orig/getlesson.c port/getlesson.c
 --- orig/getlesson.c	1970-01-01 01:00:00
-+++ port/getlesson.c	2026-03-15 11:33:07
++++ port/getlesson.c	2026-03-15 11:36:04
 @@ -0,0 +1,75 @@
 +#ifndef lint
 +static char sccsid[] = "@(#)getlesson.c	4.2	(Berkeley)	4/26/83";
@@ -575,7 +575,7 @@ diff -ruN orig/getlesson.c port/getlesson.c
 +}
 diff -ruN orig/lcount.c port/lcount.c
 --- orig/lcount.c	1970-01-01 01:00:00
-+++ port/lcount.c	2026-03-15 11:33:07
++++ port/lcount.c	2026-03-15 11:36:04
 @@ -0,0 +1,16 @@
 +#ifndef lint
 +static char sccsid[] = "@(#)lcount.c	4.2	(Berkeley)	4/25/83";
@@ -595,7 +595,7 @@ diff -ruN orig/lcount.c port/lcount.c
 +}
 diff -ruN orig/learn.c port/learn.c
 --- orig/learn.c	1970-01-01 01:00:00
-+++ port/learn.c	2026-03-15 11:33:07
++++ port/learn.c	2026-03-15 11:36:04
 @@ -0,0 +1,100 @@
 +#if	!defined(lint) && defined(DOSCCS)
 +static char sccsid[] = "@(#)learn.c	4.4.2	(2.11BSD)	1997/10/2";
@@ -699,7 +699,7 @@ diff -ruN orig/learn.c port/learn.c
 +}
 diff -ruN orig/list.c port/list.c
 --- orig/list.c	1970-01-01 01:00:00
-+++ port/list.c	2026-03-15 11:33:07
++++ port/list.c	2026-03-15 11:36:04
 @@ -0,0 +1,37 @@
 +#ifndef lint
 +static char sccsid[] = "@(#)list.c	4.2	(Berkeley)	4/25/83";
@@ -740,7 +740,7 @@ diff -ruN orig/list.c port/list.c
 +}
 diff -ruN orig/lrnref.h port/lrnref.h
 --- orig/lrnref.h	1970-01-01 01:00:00
-+++ port/lrnref.h	2026-03-15 11:33:07
++++ port/lrnref.h	2026-03-15 11:36:04
 @@ -0,0 +1,104 @@
 +/*	lrnref.h	4.4	86/05/15	*/
 +
@@ -848,7 +848,7 @@ diff -ruN orig/lrnref.h port/lrnref.h
 +#endif
 diff -ruN orig/lrntee.c port/lrntee.c
 --- orig/lrntee.c	1970-01-01 01:00:00
-+++ port/lrntee.c	2026-03-15 11:33:07
++++ port/lrntee.c	2026-03-15 11:36:04
 @@ -0,0 +1,49 @@
 +#ifndef lint
 +static char sccsid[] = "@(#)lrntee.c	4.3	(Berkeley)	5/15/86";
@@ -901,7 +901,7 @@ diff -ruN orig/lrntee.c port/lrntee.c
 +}
 diff -ruN orig/makpipe.c port/makpipe.c
 --- orig/makpipe.c	1970-01-01 01:00:00
-+++ port/makpipe.c	2026-03-15 11:33:07
++++ port/makpipe.c	2026-03-15 11:36:04
 @@ -0,0 +1,24 @@
 +#ifndef lint
 +static char sccsid[] = "@(#)makpipe.c	4.3	(Berkeley)	5/15/86";
@@ -929,7 +929,7 @@ diff -ruN orig/makpipe.c port/makpipe.c
 +}
 diff -ruN orig/maktee.c port/maktee.c
 --- orig/maktee.c	1970-01-01 01:00:00
-+++ port/maktee.c	2026-03-15 11:33:07
++++ port/maktee.c	2026-03-15 11:36:04
 @@ -0,0 +1,55 @@
 +#ifndef lint
 +static char sccsid[] = "@(#)maktee.c	4.2	(Berkeley)	4/25/83";
@@ -988,7 +988,7 @@ diff -ruN orig/maktee.c port/maktee.c
 +}
 diff -ruN orig/mem.c port/mem.c
 --- orig/mem.c	1970-01-01 01:00:00
-+++ port/mem.c	2026-03-15 11:33:07
++++ port/mem.c	2026-03-15 11:36:04
 @@ -0,0 +1,118 @@
 +#ifndef lint
 +static char sccsid[] = "@(#)mem.c	4.3	(Berkeley)	5/15/86";
@@ -1110,7 +1110,7 @@ diff -ruN orig/mem.c port/mem.c
 +}
 diff -ruN orig/mysys.c port/mysys.c
 --- orig/mysys.c	1970-01-01 01:00:00
-+++ port/mysys.c	2026-03-15 11:33:07
++++ port/mysys.c	2026-03-15 11:36:04
 @@ -0,0 +1,190 @@
 +#ifndef lint
 +static char sccsid[] = "@(#)mysys.c	4.5	(Berkeley)	5/15/86";
@@ -1302,21 +1302,9 @@ diff -ruN orig/mysys.c port/mysys.c
 +	}
 +	return(i);
 +}
-diff -ruN orig/run.sh port/run.sh
---- orig/run.sh	1970-01-01 01:00:00
-+++ port/run.sh	2026-03-15 11:33:07
-@@ -0,0 +1,8 @@
-+#!/bin/sh
-+set -eu
-+
-+cd "$(dirname "$0")"
-+ROOT="$(pwd)"
-+mkdir -p log runtime/share/learn/bin runtime/log
-+
-+exec ./learn "-$ROOT/../../runtime/share/learn" "$@"
 diff -ruN orig/selsub.c port/selsub.c
 --- orig/selsub.c	1970-01-01 01:00:00
-+++ port/selsub.c	2026-03-15 11:33:07
++++ port/selsub.c	2026-03-15 11:36:04
 @@ -0,0 +1,169 @@
 +#ifndef lint
 +static char sccsid[] = "@(#)selsub.c	4.3	(Berkeley)	5/15/86";
@@ -1489,7 +1477,7 @@ diff -ruN orig/selsub.c port/selsub.c
 +}
 diff -ruN orig/selunit.c port/selunit.c
 --- orig/selunit.c	1970-01-01 01:00:00
-+++ port/selunit.c	2026-03-15 11:33:07
++++ port/selunit.c	2026-03-15 11:36:04
 @@ -0,0 +1,119 @@
 +#ifndef lint
 +static char sccsid[] = "@(#)selunit.c	4.3	(Berkeley)	5/15/86";
@@ -1612,7 +1600,7 @@ diff -ruN orig/selunit.c port/selunit.c
 +}
 diff -ruN orig/start.c port/start.c
 --- orig/start.c	1970-01-01 01:00:00
-+++ port/start.c	2026-03-15 11:33:07
++++ port/start.c	2026-03-15 11:36:04
 @@ -0,0 +1,58 @@
 +#ifndef lint
 +static char sccsid[] = "@(#)start.c	4.5	(Berkeley)	5/15/86";
@@ -1674,7 +1662,7 @@ diff -ruN orig/start.c port/start.c
 +}
 diff -ruN orig/whatnow.c port/whatnow.c
 --- orig/whatnow.c	1970-01-01 01:00:00
-+++ port/whatnow.c	2026-03-15 11:33:07
++++ port/whatnow.c	2026-03-15 11:36:04
 @@ -0,0 +1,51 @@
 +#ifndef lint
 +static char sccsid[] = "@(#)whatnow.c	4.2	(Berkeley)	4/25/83";
@@ -1729,7 +1717,7 @@ diff -ruN orig/whatnow.c port/whatnow.c
 +}
 diff -ruN orig/wrapup.c port/wrapup.c
 --- orig/wrapup.c	1970-01-01 01:00:00
-+++ port/wrapup.c	2026-03-15 11:33:07
++++ port/wrapup.c	2026-03-15 11:36:04
 @@ -0,0 +1,40 @@
 +#ifndef lint
 +static char sccsid[] = "@(#)wrapup.c	4.3	(Berkeley)	5/15/86";

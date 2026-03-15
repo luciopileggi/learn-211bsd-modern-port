@@ -16,7 +16,7 @@ tree or lesson files in this repository.
 cd legacy/learn-211bsd
 ./scripts/bootstrap.sh
 
-# start learn directly
+# start learn
 ./work/port/learn
 
 # or start a specific course
@@ -25,9 +25,6 @@ cd legacy/learn-211bsd
 ./work/port/learn editor
 ./work/port/learn vi
 ```
-
-`./work/port/run.sh` is still available as a wrapper, but direct execution of
-`./work/port/learn` now works with the bundled lesson tree after bootstrap.
 
 ## Repository Scope
 
