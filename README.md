@@ -10,6 +10,9 @@ tasks directly at the terminal. This repository packages a modernized way to
 fetch, patch, build, and run that historical software on current Unix-like
 systems without redistributing the 2.11BSD sources and lesson files.
 
+The original `learn` system is generally attributed to Michael E. Lesk and
+Brian W. Kernighan at Bell Labs.
+
 This porting bundle was produced mostly through AI-assisted
 "vibe coding", with iterative manual testing, review, and correction around the
 generated changes.
@@ -139,6 +142,10 @@ before running the bootstrap steps above.
   URL: `https://www.tuhs.org/Archive/Distributions/UCB/2.11BSD/`
 - [TUHS tarball table of contents](https://www.tuhs.org/Archive/tarball_tocs.txt.gz)
   URL: `https://www.tuhs.org/Archive/tarball_tocs.txt.gz`
+- [original paper: "LEARN - Computer-Aided Instruction on UNIX (Second Edition)"](https://www.bitsavers.org/pdf/usenix/Usenix_BSD_Manuals/4.3_1st_printing_198611/USD_Unix_Users_Supplementary_Documents_4.3BSD_198604.pdf)
+  URL: `https://www.bitsavers.org/pdf/usenix/Usenix_BSD_Manuals/4.3_1st_printing_198611/USD_Unix_Users_Supplementary_Documents_4.3BSD_198604.pdf`
+- [7th Edition UNIX manual index entry for learn](https://wolfram.schneider.org/bsd/7thEdManVol2/index/index.html)
+  URL: `https://wolfram.schneider.org/bsd/7thEdManVol2/index/index.html`
 - [historical manual page](https://man.freebsd.org/cgi/man.cgi?query=learn&manpath=2.9.1+BSD)
   URL: `https://man.freebsd.org/cgi/man.cgi?query=learn&manpath=2.9.1+BSD`
 - [alternative Docker-based project](https://github.com/goblimey/learn-unix)
