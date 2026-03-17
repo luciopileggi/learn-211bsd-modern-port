@@ -142,8 +142,8 @@ before running the bootstrap steps above.
   URL: `https://www.tuhs.org/Archive/Distributions/UCB/2.11BSD/`
 - [TUHS tarball table of contents](https://www.tuhs.org/Archive/tarball_tocs.txt.gz)
   URL: `https://www.tuhs.org/Archive/tarball_tocs.txt.gz`
-- [original paper: "LEARN - Computer-Aided Instruction on UNIX (Second Edition)"](https://www.bitsavers.org/pdf/usenix/Usenix_BSD_Manuals/4.3_1st_printing_198611/USD_Unix_Users_Supplementary_Documents_4.3BSD_198604.pdf)
-  URL: `https://www.bitsavers.org/pdf/usenix/Usenix_BSD_Manuals/4.3_1st_printing_198611/USD_Unix_Users_Supplementary_Documents_4.3BSD_198604.pdf`
+- [original paper: "LEARN - Computer-Aided Instruction on UNIX (Second Edition)"](https://wolfram.schneider.org/bsd/7thEdManVol2/learn/learn.pdf)
+  URL: `https://wolfram.schneider.org/bsd/7thEdManVol2/learn/learn.pdf`
 - [TUHS troff source directory for the LEARN paper](https://www.tuhs.org/cgi-bin/utree.pl?file=4.3BSD-Reno/src/share/doc/usd/02.learn)
   URL: `https://www.tuhs.org/cgi-bin/utree.pl?file=4.3BSD-Reno/src/share/doc/usd/02.learn`
 - [TUHS troff source file `p0`](https://www.tuhs.org/cgi-bin/utree.pl?file=4.3BSD-Reno/src/share/doc/usd/02.learn/p0)
