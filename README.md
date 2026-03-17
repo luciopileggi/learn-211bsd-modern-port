@@ -50,6 +50,28 @@ tree, run:
 ./scripts/bootstrap.sh --clean
 ```
 
+To fetch the historical 2.11BSD material from TUHS instead of `retro11.de`:
+
+```sh
+./scripts/bootstrap.sh --clean --source tuhs
+```
+
+To force a specific TUHS 2.11BSD release directory, pass `--tuhs-release`.
+The default is the base `2.11BSD/` archive, which matches the source layout
+used by this port bundle:
+
+```sh
+./scripts/bootstrap.sh --clean --source tuhs --tuhs-release 2.11BSD
+```
+
+For example, TUHS also exposes other 2.11BSD directories such as
+`2.11BSD-patch481/`, and the scripts can target those if they provide the same
+`file6.tar.gz` / `file7.tar.gz` / `file8.tar.gz` distribution layout:
+
+```sh
+./scripts/bootstrap.sh --clean --source tuhs --tuhs-release 2.11BSD-patch481
+```
+
 ## Install
 
 To install `learn` and its lesson tree under `/usr/local`:
@@ -111,6 +133,12 @@ before running the bootstrap steps above.
   URL: `https://www.retro11.de/ouxr/211bsd/usr/src/usr.bin/learn/`
 - [lesson tree](https://www.retro11.de/ouxr/211bsd/usr/src/share/learn/)
   URL: `https://www.retro11.de/ouxr/211bsd/usr/src/share/learn/`
+- [TUHS UCB distribution archive](https://www.tuhs.org/Archive/Distributions/UCB/)
+  URL: `https://www.tuhs.org/Archive/Distributions/UCB/`
+- [TUHS base 2.11BSD release directory](https://www.tuhs.org/Archive/Distributions/UCB/2.11BSD/)
+  URL: `https://www.tuhs.org/Archive/Distributions/UCB/2.11BSD/`
+- [TUHS tarball table of contents](https://www.tuhs.org/Archive/tarball_tocs.txt.gz)
+  URL: `https://www.tuhs.org/Archive/tarball_tocs.txt.gz`
 - [historical manual page](https://man.freebsd.org/cgi/man.cgi?query=learn&manpath=2.9.1+BSD)
   URL: `https://man.freebsd.org/cgi/man.cgi?query=learn&manpath=2.9.1+BSD`
 - [alternative Docker-based project](https://github.com/goblimey/learn-unix)

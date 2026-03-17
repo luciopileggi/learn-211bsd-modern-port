@@ -2,18 +2,49 @@
 set -eu
 
 ROOT="$(CDPATH= cd -- "$(dirname "$0")/.." && pwd)"
+SOURCE="retro11"
+TUHS_RELEASE="2.11BSD"
 
 if [ "${1:-}" = "--clean" ]; then
 	rm -rf "$ROOT/work" "$ROOT/runtime"
 	shift
 fi
 
-if [ "$#" -ne 0 ]; then
-	printf '%s\n' "usage: $0 [--clean]" >&2
-	exit 2
-fi
+while [ "$#" -gt 0 ]; do
+	case "$1" in
+		--source)
+			if [ "$#" -lt 2 ]; then
+				printf '%s\n' "missing value for --source" >&2
+				exit 2
+			fi
+			SOURCE="$2"
+			shift 2
+			;;
+		--tuhs-release)
+			if [ "$#" -lt 2 ]; then
+				printf '%s\n' "missing value for --tuhs-release" >&2
+				exit 2
+			fi
+			TUHS_RELEASE="$2"
+			shift 2
+			;;
+		*)
+			printf '%s\n' "usage: $0 [--clean] [--source retro11|tuhs] [--tuhs-release release-dir]" >&2
+			exit 2
+			;;
+	esac
+done
 
-"$ROOT/scripts/fetch-sources.sh"
+case "$SOURCE" in
+	retro11|tuhs)
+		;;
+	*)
+		printf '%s\n' "unknown source: $SOURCE" >&2
+		exit 2
+		;;
+esac
+
+"$ROOT/scripts/fetch-sources.sh" --source "$SOURCE" --tuhs-release "$TUHS_RELEASE"
 rm -rf "$ROOT/work/src" "$ROOT/work/bin"
 mkdir -p "$ROOT/work/src" "$ROOT/work/bin"
 sed \
@@ -30,7 +61,10 @@ cp \
 	"$ROOT/work/src/lcount" \
 	"$ROOT/work/bin/"
 
-"$ROOT/scripts/fetch-lessons.sh"
+"$ROOT/scripts/fetch-lessons.sh" --source "$SOURCE" --tuhs-release "$TUHS_RELEASE"
+
+find "$ROOT/runtime/share/learn" -type d -exec chmod u+rwx {} \;
+find "$ROOT/runtime/share/learn" -type f -exec chmod u+rw {} \;
 
 cat > "$ROOT/runtime/share/learn/vi/Init" <<'EOF'
 #!/bin/sh
