@@ -10,7 +10,7 @@ tasks directly at the terminal. This repository packages a modernized way to
 fetch, patch, build, and run that historical software on current Unix-like
 systems without redistributing the 2.11BSD sources and lesson files.
 
-The original `learn` system is generally attributed to Michael E. Lesk and
+The original `learn` system is attributed to Michael E. Lesk and
 Brian W. Kernighan at Bell Labs.
 
 This porting bundle was produced mostly through AI-assisted
@@ -142,7 +142,7 @@ before running the bootstrap steps above.
   URL: `https://www.tuhs.org/Archive/Distributions/UCB/2.11BSD/`
 - [TUHS tarball table of contents](https://www.tuhs.org/Archive/tarball_tocs.txt.gz)
   URL: `https://www.tuhs.org/Archive/tarball_tocs.txt.gz`
-- [original paper: "LEARN - Computer-Aided Instruction on UNIX (Second Edition)"](https://wolfram.schneider.org/bsd/7thEdManVol2/learn/learn.pdf)
+- [ Brian W. Kernighan Michael E. Lesk: "LEARN - Computer-Aided Instruction on UNIX (Second Edition)"](https://wolfram.schneider.org/bsd/7thEdManVol2/learn/learn.pdf)
   URL: `https://wolfram.schneider.org/bsd/7thEdManVol2/learn/learn.pdf`
 - [TUHS troff source directory for the LEARN paper](https://www.tuhs.org/cgi-bin/utree.pl?file=4.3BSD-Reno/src/share/doc/usd/02.learn)
   URL: `https://www.tuhs.org/cgi-bin/utree.pl?file=4.3BSD-Reno/src/share/doc/usd/02.learn`
@@ -150,7 +150,7 @@ before running the bootstrap steps above.
   URL: `https://www.tuhs.org/cgi-bin/utree.pl?file=4.3BSD-Reno/src/share/doc/usd/02.learn/p0`
 - [7th Edition UNIX manual index entry for learn](https://wolfram.schneider.org/bsd/7thEdManVol2/index/index.html)
   URL: `https://wolfram.schneider.org/bsd/7thEdManVol2/index/index.html`
-- [historical manual page](https://man.freebsd.org/cgi/man.cgi?query=learn&manpath=2.9.1+BSD)
+- [manual page](https://man.freebsd.org/cgi/man.cgi?query=learn&manpath=2.9.1+BSD)
   URL: `https://man.freebsd.org/cgi/man.cgi?query=learn&manpath=2.9.1+BSD`
 - [alternative Docker-based project](https://github.com/goblimey/learn-unix)
   URL: `https://github.com/goblimey/learn-unix`
