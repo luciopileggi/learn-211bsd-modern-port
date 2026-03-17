@@ -50,7 +50,7 @@ tree, run:
 ./scripts/bootstrap.sh --clean
 ```
 
-To fetch the historical 2.11BSD material from TUHS instead of `retro11.de`:
+To fetch the historical 2.11BSD material from `TUHS.org` instead of `retro11.de`:
 
 ```sh
 ./scripts/bootstrap.sh --clean --source tuhs
